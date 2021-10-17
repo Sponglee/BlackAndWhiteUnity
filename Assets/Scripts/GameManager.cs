@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
     public PlayState PlayState { get; private set; }
     public FinishState FinishState { get; private set; }
     public PlayerController PlayerController { get; private set; }
+    public Transform spawnPoint;
     public bool IsEnabled { get; private set; }
     #endregion
 
@@ -40,7 +41,7 @@ public class GameManager : Singleton<GameManager>
         StateMachine = new StateMachine();
 
         //Initialize the player
-        PlayerController = Instantiate(playerPrefab).GetComponent<PlayerController>();
+        PlayerController = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
 
         StartState = new StartState(PlayerController, StateMachine);
         PlayState = new PlayState(PlayerController, StateMachine);

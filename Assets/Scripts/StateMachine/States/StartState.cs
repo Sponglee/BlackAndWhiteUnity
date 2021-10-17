@@ -12,7 +12,7 @@ public class StartState : State
     public override void Enter()
     {
 
-        CameraManager.Instance.SetLive("startCam");
+        // CameraManager.Instance.SetLive("startCam");
         base.Enter();
     }
 

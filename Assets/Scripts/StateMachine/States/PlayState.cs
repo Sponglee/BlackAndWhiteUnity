@@ -45,6 +45,7 @@ public class PlayState : State
             GameManager.Instance.ChangeState(StateEnum.StartState);
         }
 
+
     }
 
     public override void LogicUpdate()
@@ -54,6 +55,7 @@ public class PlayState : State
 
     public override void PhysicsUpdate()
     {
+
         _playerController.Move(new Vector3(joystick.Horizontal, 0f, joystick.Vertical));
         base.PhysicsUpdate();
     }
