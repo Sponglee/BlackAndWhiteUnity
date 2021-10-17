@@ -11,6 +11,9 @@ public class PlayState : State
     public PlayState(PlayerController playerController, StateMachine stateMachine) : base(playerController, stateMachine)
     {
         //Maybe initialize joystick here and disabling it later?
+        // _playerController = playerController;
+
+
     }
 
     public override void Enter()

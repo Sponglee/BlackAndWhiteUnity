@@ -25,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     public StartState StartState { get; private set; }
     public PlayState PlayState { get; private set; }
     public FinishState FinishState { get; private set; }
+    public PauseState PauseState { get; private set; }
     public PlayerController PlayerController { get; private set; }
     public Transform spawnPoint;
     public bool IsEnabled { get; private set; }
@@ -41,11 +42,16 @@ public class GameManager : Singleton<GameManager>
         StateMachine = new StateMachine();
 
         //Initialize the player
-        PlayerController = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
+        if (PlayerController == null)
+        {
+            PlayerController = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<PlayerController>();
+            PlayerController.gameObject.SetActive(false);
+        }
 
         StartState = new StartState(PlayerController, StateMachine);
         PlayState = new PlayState(PlayerController, StateMachine);
         FinishState = new FinishState(PlayerController, StateMachine);
+        PauseState = new PauseState(PlayerController, StateMachine);
 
     }
 
@@ -54,7 +60,7 @@ public class GameManager : Singleton<GameManager>
         StateMachine.OnStateChange += GameStateHandler;
 
         // Applying default state in state machine
-        StateMachine.Initialize(GetState(currentState));
+        StateMachine.Initialize(StateEnumToState(CurrentState));
     }
 
     private void Update()
@@ -71,14 +77,51 @@ public class GameManager : Singleton<GameManager>
     }
     #endregion
 
+    public void GameOver()
+    {
+
+    }
+
+
 
     public void ChangeState(StateEnum value)
     {
-        currentState = value;
-        StateMachine.ChangeState(GetState(value));
+        // Debug.Log("STATE CHANGED TO " + value);
+        CurrentState = value;
+        StateMachine.ChangeState(StateEnumToState(value));
+
     }
 
-    private State GetState(StateEnum defaultState)
+    public StateEnum CheckState()
+    {
+        State state = StateMachine.CurrentState;
+
+        StateEnum stateEnum = StateEnum.PauseState;
+
+        switch (state)
+        {
+            case StartState _:
+                {
+                    stateEnum = StateEnum.StartState;
+                    // PlayerController.SetUpPath(StageController.Instance.currentPath);
+                    break;
+                }
+            case PlayState _:
+                {
+                    stateEnum = StateEnum.PlayState;
+                    break;
+                }
+            case FinishState _:
+                {
+                    stateEnum = StateEnum.FinishState;
+                    break;
+                }
+        }
+
+        return stateEnum;
+    }
+
+    private State StateEnumToState(StateEnum defaultState)
     {
         State state = null;
 
@@ -93,6 +136,9 @@ public class GameManager : Singleton<GameManager>
             case StateEnum.FinishState:
                 state = FinishState;
                 break;
+            case StateEnum.PauseState:
+                state = PauseState;
+                break;
         }
         return state;
     }
@@ -106,8 +152,14 @@ public class GameManager : Singleton<GameManager>
                 {
                     break;
                 }
+            case PauseState _:
+                {
+                    break;
+                }
             case PlayState _:
                 {
+                    PlayerController.gameObject.SetActive(true);
+
                     break;
                 }
             case FinishState _:
