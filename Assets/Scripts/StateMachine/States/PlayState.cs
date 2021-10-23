@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayState : State
 {
-    [SerializeField] Joystick joystick;
-    [SerializeField] GameObject joystickSystem;
+    // [SerializeField] Joystick joystick;
+    // [SerializeField] GameObject joystickSystem;
 
 
     public PlayState(PlayerController playerController, StateMachine stateMachine) : base(playerController, stateMachine)
@@ -19,13 +19,13 @@ public class PlayState : State
     public override void Enter()
     {
 
-        //Set up joystick as Input System
-        if (joystickSystem == null)
-        {
-            GameObject joystickPrefab = Resources.Load("Prefabs/JoystickSystem") as GameObject;
-            joystickSystem = GameObject.Instantiate(joystickPrefab);
-            joystick = joystickSystem.GetComponentInChildren<Joystick>();
-        }
+        // //Set up joystick as Input System
+        // if (joystickSystem == null)
+        // {
+        //     GameObject joystickPrefab = Resources.Load("Prefabs/JoystickSystem") as GameObject;
+        //     joystickSystem = GameObject.Instantiate(joystickPrefab);
+        //     joystick = joystickSystem.GetComponentInChildren<Joystick>();
+        // }
 
 
         CameraManager.Instance.SetLive("playCam");
@@ -37,7 +37,7 @@ public class PlayState : State
     public override void Exit()
     {
         //Dispose of joystick System on state exit
-        GameObject.Destroy(joystickSystem);
+        // GameObject.Destroy(joystickSystem);
         base.Exit();
     }
 
@@ -59,7 +59,7 @@ public class PlayState : State
     public override void PhysicsUpdate()
     {
 
-        _playerController.Move(new Vector3(joystick.Horizontal, 0f, joystick.Vertical));
+        _playerController.Move(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
         base.PhysicsUpdate();
     }
 

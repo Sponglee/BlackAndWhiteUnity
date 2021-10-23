@@ -19,8 +19,8 @@ public class PlayerController : MonoBehaviour
     {
 
         var move = cameraRef.rotation * direction;
-        move.y = 0f;
-        rb.velocity = move * movementSpeed;
+        move.y = rb.velocity.y;
+        rb.velocity = new Vector3(move.x * Time.fixedDeltaTime * movementSpeed, move.y * Time.fixedDeltaTime * movementSpeed / 10f, move.z * Time.fixedDeltaTime * movementSpeed);
 
 
 
@@ -33,4 +33,6 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("IsMoving", false);
 
     }
+
+
 }

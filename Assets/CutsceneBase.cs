@@ -10,6 +10,16 @@ public class CutsceneBase : MonoBehaviour
     {
         // cutSceneTimeLine.enabled = false;
         // cutSceneTimeLine.gameObject.SetActive(false);
+
+        // GameManager.Instance.StateMachine.OnStateChange += CutsceneHandler;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SkipCutscene();
+        }
     }
 
     public virtual void CutSceneComplete()
@@ -42,4 +52,38 @@ public class CutsceneBase : MonoBehaviour
     //         CutSceneEnter(other.GetComponent<PlayerController>());
     //     }
     // }
+
+
+    // private void CutsceneHandler(object sender, State targetState)
+    // {
+    //     switch (targetState)
+    //     {
+    //         case StartState _:
+    //             {
+    //                 break;
+    //             }
+    //         case PauseState _:
+    //             {
+    //                 break;
+    //             }
+    //         case PlayState _:
+    //             {
+
+
+    //                 break;
+    //             }
+    //         case FinishState _:
+    //             {
+    //                 break;
+    //             }
+    //     }
+    // }
+
+
+    public void SkipCutscene()
+    {
+        CutSceneComplete();
+        this.enabled = false;
+        gameObject.SetActive(false);
+    }
 }
