@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private Rigidbody rb;
@@ -10,8 +10,19 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform cameraRef;
 
+
+    [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private float attackRadius;
+
+    public void TakeDamage(int amount)
+    {
+        playerAnim.SetTrigger("React");
+        Debug.Log("PLAYER GOT HIT");
+    }
+
     private void Start()
     {
+
         cameraRef = Camera.main.transform;
     }
 
@@ -32,6 +43,33 @@ public class PlayerController : MonoBehaviour
         else
             playerAnim.SetBool("IsMoving", false);
 
+    }
+
+
+    public void Attack()
+    {
+        playerAnim.SetTrigger("Attack");
+
+
+        Collider[] targets = Physics.OverlapSphere(transform.position, attackRadius, targetLayer);
+
+        if (targets.Length > 0)
+        {
+            foreach (Collider item in targets)
+            {
+                if (item.GetComponent<IDamagable>() != null)
+                {
+                    item.GetComponent<IDamagable>().TakeDamage(1);
+                }
+            }
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 
 

@@ -48,7 +48,12 @@ public class PlayState : State
             GameManager.Instance.ChangeState(StateEnum.StartState);
         }
 
+        if (Input.GetAxis("Fire1") > 0)
+        {
+            _playerController.Attack();
+        }
 
+        _playerController.Move(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
     }
 
     public override void LogicUpdate()
@@ -59,7 +64,7 @@ public class PlayState : State
     public override void PhysicsUpdate()
     {
 
-        _playerController.Move(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
+
         base.PhysicsUpdate();
     }
 

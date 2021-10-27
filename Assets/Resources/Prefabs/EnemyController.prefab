@@ -103,9 +103,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4651553116603424738}
   - component: {fileID: 6596454660244259566}
+  - component: {fileID: 2540315215014662413}
+  - component: {fileID: 1650696561820205114}
   - component: {fileID: 4651553116603424736}
   - component: {fileID: 27195403594464352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,9 +142,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20f83df7418f41c686b5d1040f156a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 250
   rb: {fileID: 4651553116603424736}
   playerAnim: {fileID: 6090170628425270973}
+  _aiController: {fileID: 2540315215014662413}
+  agent: {fileID: 1650696561820205114}
+--- !u!114 &2540315215014662413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651553116603424739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe2aeb40f47c4305b8703abb17d0708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiState: 0
+  decisionTime: 0.5
+  aggroRadius: 5
+  attackRange: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!195 &1650696561820205114
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651553116603424739}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!54 &4651553116603424736
 Rigidbody:
   m_ObjectHideFlags: 0
