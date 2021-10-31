@@ -6,6 +6,7 @@ TagManager:
   tags:
   - VCam
   - WaterChunk
+  - Canvases
   layers:
   - Default
   - TransparentFX

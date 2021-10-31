@@ -50,6 +50,7 @@ public class PlayState : State
 
         if (Input.GetAxis("Fire1") > 0)
         {
+
             _playerController.Attack();
         }
 

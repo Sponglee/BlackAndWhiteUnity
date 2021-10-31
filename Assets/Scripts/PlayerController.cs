@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float attackRadius;
 
+    [SerializeField] private MousePivot mousePivot;
+
     public void TakeDamage(int amount)
     {
         playerAnim.SetTrigger("React");
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         playerAnim.SetTrigger("Attack");
 
+        LookAtPivot();
 
         Collider[] targets = Physics.OverlapSphere(transform.position, attackRadius, targetLayer);
 
@@ -65,6 +68,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
     }
 
+    public void LookAtPivot()
+    {
+        transform.LookAt(new Vector3(mousePivot.pivot.transform.position.x, transform.position.y, mousePivot.pivot.transform.position.z));
+    }
 
     private void OnDrawGizmos()
     {
