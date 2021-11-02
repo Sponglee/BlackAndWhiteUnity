@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour, IDamagable
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator playerAnim;
 
+    [SerializeField] private GameObject hitPref;
+
     private GameManager gameManagerRef;
     private PlayerController playerRef;
 
@@ -17,10 +19,32 @@ public class EnemyController : MonoBehaviour, IDamagable
 
     [SerializeField] private NavMeshAgent agent;
 
+    [SerializeField] private int hp = 5;
+
     public void TakeDamage(int damage)
     {
-        playerAnim.transform.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.InQuad).OnComplete(() => { playerAnim.transform.localScale = Vector3.one; });
-        playerAnim.SetTrigger("React");
+        Debug.Log("HERE " + hp);
+        if (hp <= 0)
+            return;
+
+
+        hp -= damage;
+        // playerAnim.transform.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.InQuad).OnComplete(() => { playerAnim.transform.localScale = Vector3.one; });
+        playerAnim.Play("React");
+        Destroy(Instantiate(hitPref, transform.position + Vector3.up, Quaternion.identity), 3f);
+
+        _aiController.ChangeState(AIState.GotHit);
+
+        if (hp <= 0)
+        {
+            playerAnim.SetBool("IsDead", true);
+            playerAnim.SetLayerWeight(1, 0);
+            playerAnim.Play("Death");
+            _aiController.ChangeState(AIState.Dead);
+            // _aiController.enabled = false;
+            // this.enabled = false;
+        }
+
     }
 
     private void Start()
@@ -52,10 +76,17 @@ public class EnemyController : MonoBehaviour, IDamagable
 
     }
 
+    public void AttackAnim()
+    {
+        playerAnim.Play("Attack");
+    }
     public void Attack(IDamagable target)
     {
-        playerAnim.SetTrigger("Attack");
+        // playerAnim.SetTrigger("Attack");
+
         target.TakeDamage(1);
+        // target.TakeDamage(1);
+
     }
 
     // public void Move(Vector3 direction)

@@ -48,7 +48,7 @@ public class PlayState : State
             GameManager.Instance.ChangeState(StateEnum.StartState);
         }
 
-        if (Input.GetAxis("Fire1") > 0)
+        if (Input.GetAxis("Fire1") != 0)
         {
 
             _playerController.Attack();
