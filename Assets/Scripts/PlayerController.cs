@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform model;
+    [SerializeField] private Transform attackSystem;
+
 
     [SerializeField] private Animator playerAnim;
 
@@ -20,10 +22,24 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private MousePivot mousePivot;
     [SerializeField] private Transform attackPoint;
 
+
+    [SerializeField] private HPSystem hpSystem;
+
     public void TakeDamage(int amount)
     {
+        if (hpSystem.IsDead)
+            return;
+
         // playerAnim.SetLayerWeight(1, 0);
         playerAnim.Play("React");
+
+        hpSystem.DecreaseHp(amount);
+
+        if (hpSystem.IsDead)
+        {
+            Death();
+        }
+
         Destroy(Instantiate(hitPref, transform.position + Vector3.up, Quaternion.identity), 3f);
 
         // DOVirtual.DelayedCall(1f, () =>
@@ -79,36 +95,44 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         LookAtPivot(() =>
         {
-
-        });
-
-        Collider[] targets = Physics.OverlapSphere(attackPoint.position, attackRadius, targetLayer);
+            Collider[] targets = Physics.OverlapSphere(attackPoint.position, attackRadius, targetLayer);
 
 
-        Debug.Log("Targets " + targets.Length);
 
-        if (targets.Length > 0)
-        {
+            // Debug.DrawLine(transform.position, attackPoint.position, Color.green, 10f);
 
-            foreach (Collider item in targets)
+            if (targets.Length > 0)
             {
-                if (item.GetComponent<IDamagable>() != null)
+
+                foreach (Collider item in targets)
                 {
-                    item.GetComponent<IDamagable>().TakeDamage(1);
+                    // Debug.Log("Targets " + item.name + " : " + item.gameObject.layer);
+                    if (item.GetComponent<IDamagable>() != null)
+                    {
+                        item.GetComponent<IDamagable>().TakeDamage(1);
+                    }
                 }
             }
-        }
+        });
+
+
+    }
+
+    public void Death()
+    {
+        playerAnim.Play("Death");
+        GameManager.Instance.ChangeState(StateEnum.PauseState);
     }
 
     public void LookAtPivot(TweenCallback aCallback)
     {
-        model.DOLookAt(new Vector3(mousePivot.pivot.transform.position.x, transform.position.y, mousePivot.pivot.transform.position.z), 0.3f).OnComplete(aCallback);
+        model.DOLookAt(new Vector3(mousePivot.pivot.transform.position.x, transform.position.y, mousePivot.pivot.transform.position.z), 0.2f).OnComplete(aCallback);
 
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 

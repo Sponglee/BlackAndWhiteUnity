@@ -88,6 +88,7 @@ public class AIControllerBase : MonoBehaviour
                 aiState = AIState.Idle;
                 break;
             case AIState.Dead:
+                refController.agent.enabled = false;
                 break;
         }
     }

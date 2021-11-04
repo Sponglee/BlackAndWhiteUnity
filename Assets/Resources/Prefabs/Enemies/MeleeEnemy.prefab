@@ -217,11 +217,12 @@ GameObject:
   - component: {fileID: 4651553116603424738}
   - component: {fileID: 6596454660244259566}
   - component: {fileID: 2540315215014662413}
+  - component: {fileID: 3039742958456417555}
   - component: {fileID: 1650696561820205114}
   - component: {fileID: 4651553116603424736}
   - component: {fileID: 27195403594464352}
   m_Layer: 6
-  m_Name: EnemyController
+  m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   hitPref: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   _aiController: {fileID: 2540315215014662413}
   agent: {fileID: 1650696561820205114}
-  hp: 5
+  hpSystem: {fileID: 3039742958456417555}
 --- !u!114 &2540315215014662413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiState: 0
   decisionTime: 0.2
+  attackDelay: 0.3
   attackCooldown: 1
   aggroRadius: 15
   attackRange: 1.5
@@ -282,6 +284,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   currentTarget: {fileID: 0}
+--- !u!114 &3039742958456417555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651553116603424739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a845aa3e8ecb4bbb876f6c0dbd41d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 10
+  hpUIPref: {fileID: 8397747576022294983, guid: 9435b019aa3054829bebb19d499cb02b, type: 3}
+  IsDead: 0
+  OnHpChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &1650696561820205114
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -315,8 +335,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -328,7 +348,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4651553116603424739}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
