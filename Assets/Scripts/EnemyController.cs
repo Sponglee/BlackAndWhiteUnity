@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour, IDamagable
 {
-    // [SerializeField] private float movementSpeed = 500f;
+    [SerializeField] private float movementSpeed = 500f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator playerAnim;
 
@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour, IDamagable
     [SerializeField] public NavMeshAgent agent;
 
     [SerializeField] private HPSystem hpSystem;
+
 
     public void TakeDamage(int damage)
     {
@@ -52,6 +53,9 @@ public class EnemyController : MonoBehaviour, IDamagable
     {
         gameManagerRef = GameManager.Instance;
         playerRef = gameManagerRef.PlayerController;
+        agent.avoidancePriority = Random.Range(0, 50);
+        agent.speed = movementSpeed;
+
     }
 
     private void Update()

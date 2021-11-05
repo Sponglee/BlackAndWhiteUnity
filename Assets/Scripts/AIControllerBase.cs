@@ -23,6 +23,10 @@ public class AIControllerBase : MonoBehaviour
 
     private bool IsOnCoolDown = false;
 
+    private void Start()
+    {
+        decisionTime *= Random.Range(0.9f, 1.2f);
+    }
 
     public void CheckBehaviour(EnemyController refController)
     {

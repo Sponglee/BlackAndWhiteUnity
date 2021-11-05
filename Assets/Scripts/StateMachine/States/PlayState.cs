@@ -54,6 +54,10 @@ public class PlayState : State
             _playerController.Attack();
         }
 
+        if (Input.GetAxis("Jump") != 0)
+            _playerController.Dash();
+
+
         _playerController.Move(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
     }
 

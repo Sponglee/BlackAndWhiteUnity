@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20f83df7418f41c686b5d1040f156a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 5
   rb: {fileID: 4651553116603424736}
   playerAnim: {fileID: 6090170628425270973}
   hitPref: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
@@ -297,11 +298,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp: 10
-  hpUIPref: {fileID: 8397747576022294983, guid: 9435b019aa3054829bebb19d499cb02b, type: 3}
+  hpUIPref: {fileID: 8397747576022294983, guid: 7860149f84e7c4312afa32b3937dca83, type: 3}
   IsDead: 0
   OnHpChange:
     m_PersistentCalls:
       m_Calls: []
+  HasHPBar: 1
 --- !u!195 &1650696561820205114
 NavMeshAgent:
   m_ObjectHideFlags: 0

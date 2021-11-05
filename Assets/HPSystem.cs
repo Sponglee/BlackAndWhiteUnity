@@ -13,14 +13,18 @@ public class HPSystem : MonoBehaviour
 
     public UnityEvent<float, float> OnHpChange;
 
+    public bool HasHPBar = true;
 
     private int MaxHp;
 
     private void Start()
     {
         MaxHp = Hp;
-        UIHpElement tmpUI = Instantiate(hpUIPref, GameObject.FindGameObjectWithTag("Canvases").transform).GetComponent<UIHpElement>();
-        tmpUI.InitializeUIHP(this);
+        if (HasHPBar)
+        {
+            UIHpElement tmpUI = Instantiate(hpUIPref, GameObject.FindGameObjectWithTag("Canvases").transform).GetComponent<UIHpElement>();
+            tmpUI.InitializeUIHP(this);
+        }
     }
 
     public void DecreaseHp(int amount)

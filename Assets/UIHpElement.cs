@@ -7,6 +7,13 @@ public class UIHpElement : MonoBehaviour
 
     public Slider hpSlider;
 
+    private Camera cam;
+
+    private void Start()
+    {
+        cam = Camera.main;
+    }
+
     public void InitializeUIHP(HPSystem target)
     {
         referenceHp = target;
@@ -14,9 +21,9 @@ public class UIHpElement : MonoBehaviour
         target.OnHpChange.AddListener(HpChangeHandler);
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        transform.position = Camera.main.WorldToScreenPoint(referenceHp.transform.position);
+        transform.position = cam.WorldToScreenPoint(referenceHp.transform.position);
     }
 
 
