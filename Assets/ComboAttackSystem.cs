@@ -14,7 +14,7 @@ public class ComboAttackSystem : MonoBehaviour
     {
         OnAttack.Invoke();
         refAnim.SetTrigger("Attack");
-        // Instantiate(swingEffectPref, transform.position + Vector3.up, Quaternion.Euler(new Vector3(-90f, 0f, 0f)), transform);
+        Instantiate(swingEffectPref, transform.position + Vector3.up, Quaternion.Euler(new Vector3(-90f, 0f, 0f)), transform);
     }
 
 

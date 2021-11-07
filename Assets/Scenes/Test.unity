@@ -1147,7 +1147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &653260036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2031,6 +2031,38 @@ PrefabInstance:
     - target: {fileID: 4715457251686639558, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
       propertyPath: m_Priority
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066384, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_XDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066384, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_YDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066384, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_ZDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066387, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066387, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066387, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_VerticalDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066387, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_HorizontalDamping
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715457252968066387, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4715457253638930626, guid: df8f09c9b672e4223ad2e20e2f06d3b0, type: 3}
       propertyPath: m_Name

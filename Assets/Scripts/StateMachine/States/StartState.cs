@@ -24,7 +24,7 @@ public class StartState : State
     public override void HandleInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             GameManager.Instance.ChangeState(StateEnum.PlayState);
         }

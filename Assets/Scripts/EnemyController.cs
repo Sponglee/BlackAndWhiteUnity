@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour, IDamagable
 
     public void AttackAnim()
     {
-        playerAnim.Play("Attack");
+        playerAnim.SetTrigger("Attack");
     }
     public void Attack(IDamagable target)
     {

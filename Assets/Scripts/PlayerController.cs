@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private GameObject hitPref;
     [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private float dashDistance = 300f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform model;
     [SerializeField] private Transform attackSystem;
@@ -19,8 +20,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private HPSystem hpSystem;
     [SerializeField] private ComboAttackSystem comboSystem;
-    private bool IsAttacking = false;
-
+    public bool IsAttacking = false;
+    public bool IsDashing = false;
     private void Start()
     {
         cameraRef = Camera.main.transform;
@@ -28,23 +29,68 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void Move(Vector3 direction)
     {
-        var move = cameraRef.rotation * direction;
+        if (IsDashing)
+            return;
+
+        var move = Vector3.Scale(cameraRef.rotation * direction, new Vector3(1, 0, 1));
         move.y = rb.velocity.y;
 
         if (direction != Vector3.zero)
         {
-            agent.Move(new Vector3(move.x * Time.fixedDeltaTime * movementSpeed, move.y * Time.fixedDeltaTime * movementSpeed / 10f, move.z * Time.fixedDeltaTime * movementSpeed));
+            // agent.isStopped = true;
+            agent.Move(new Vector3(move.x * Time.fixedDeltaTime * agent.speed, move.y * Time.fixedDeltaTime * movementSpeed / 10f, move.z * Time.fixedDeltaTime * agent.speed));
             playerAnim.SetBool("IsMoving", true);
 
             if (!IsAttacking)
                 model.DOLocalRotate(Vector3.zero, 0.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(cameraRef.rotation * direction, new Vector3(1, 0, 1))), 0.5f);
         }
         else
         {
             playerAnim.SetBool("IsMoving", false);
-            agent.isStopped = true;
         }
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(cameraRef.rotation * direction, new Vector3(1, 0, 1))), 0.5f);
+    }
+
+    public void Dash(Vector3 dir)
+    {
+        if (IsDashing)
+            return;
+
+        IsDashing = true;
+        playerAnim.SetBool("IsDashing", true);
+        agent.speed = 0f;
+
+        Vector3 startPos = transform.position;
+        var move = Vector3.Scale(cameraRef.rotation * dir, new Vector3(1, 0, 1)).normalized;
+        Debug.Log(dir + " : " + move);
+
+
+
+        agent.Move(move * Time.fixedDeltaTime * dashDistance);
+
+
+        DOVirtual.DelayedCall(0.3f, () =>
+        {
+            // agent.speed = tmpSpeed;
+            // agent.enabled = true;
+            // agent.acceleration = 0f;
+            // rb.velocity = Vector3.zero;
+            agent.speed = movementSpeed;
+            agent.ResetPath();
+            playerAnim.SetBool("IsDashing", false);
+            IsDashing = false;
+        });
+        // agent.SetDestination(transform.position + transform.forward * movementSpeed);
+
+        // DOVirtual.DelayedCall(10f, () =>
+        // {
+
+        // });
+    }
+
+    public void Jump()
+    {
+        // agent.SetDestination()
     }
 
     public void Attack()
@@ -78,17 +124,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         });
     }
 
-    public void Dash()
-    {
-        playerAnim.SetBool("IsDashing", true);
-
-        Move(transform.forward * 10f);
-        DOVirtual.DelayedCall(0.5f, () =>
-        {
-            rb.velocity = Vector3.zero;
-            playerAnim.SetBool("IsDashing", false);
-        });
-    }
 
     public void Death()
     {

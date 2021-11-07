@@ -41,12 +41,13 @@ public class PlayState : State
         base.Exit();
     }
 
+    private bool m_isDashAxisInUse = false;
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameManager.Instance.ChangeState(StateEnum.StartState);
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     GameManager.Instance.ChangeState(StateEnum.StartState);
+        // }
 
         if (Input.GetAxis("Fire1") != 0)
         {
@@ -54,11 +55,22 @@ public class PlayState : State
             _playerController.Attack();
         }
 
-        if (Input.GetAxis("Jump") != 0)
-            _playerController.Dash();
-
-
         _playerController.Move(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
+
+
+        if (Input.GetAxisRaw("Jump") != 0 && !m_isDashAxisInUse)
+        {
+            m_isDashAxisInUse = true;
+            _playerController.Dash(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
+        }
+        else if (Input.GetAxisRaw("Jump") == 0)
+        {
+            m_isDashAxisInUse = false;
+        }
+
+
+
+
     }
 
     public override void LogicUpdate()
