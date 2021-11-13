@@ -360,6 +360,7 @@ MonoBehaviour:
   _aiController: {fileID: 2540315215014662413}
   agent: {fileID: 1650696561820205114}
   hpSystem: {fileID: 3039742958456417555}
+  attackDamage: 1
 --- !u!114 &2540315215014662413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +549,7 @@ PrefabInstance:
     - target: {fileID: 8654250720411597152, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: b2ebca387870246bab8603d42de8ff27, type: 2}
+      objectReference: {fileID: 9100000, guid: 2feb80dd6ef61476083a32d7840bb6c5, type: 2}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_RootOrder
       value: 1

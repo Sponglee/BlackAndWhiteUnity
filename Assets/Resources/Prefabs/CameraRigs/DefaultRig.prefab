@@ -48,7 +48,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 0
+  m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -170,14 +170,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4715457252489247013}
-  m_LocalRotation: {x: 0.0918765, y: -0.7011115, z: 0.091876246, w: 0.7011135}
-  m_LocalPosition: {x: 8.64, y: 2.15, z: 4.9}
+  m_LocalRotation: {x: 0.4597038, y: 0, z: 0, w: 0.8880723}
+  m_LocalPosition: {x: 7.162095, y: 10.241623, z: -1.9694729}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4715457252968066386}
   m_Father: {fileID: 4715457253638930627}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 14.931, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 54.736, y: 0, z: 0}
 --- !u!114 &4715457252489247019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 4715457252968066386}
   - component: {fileID: 4715457252968066385}
   - component: {fileID: 4715457252968066384}
-  - component: {fileID: 4715457252968066387}
   - component: {fileID: 3666873837634084390}
   m_Layer: 0
   m_Name: cm
@@ -272,42 +271,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 5, y: 10, z: -5}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_FollowOffset: {x: 0, y: 10, z: -5}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
---- !u!114 &4715457252968066387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4715457252968066381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0.1
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0.2
-  m_DeadZoneHeight: 0.2
-  m_SoftZoneWidth: 1
-  m_SoftZoneHeight: 1
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
 --- !u!114 &3666873837634084390
 MonoBehaviour:
   m_ObjectHideFlags: 0

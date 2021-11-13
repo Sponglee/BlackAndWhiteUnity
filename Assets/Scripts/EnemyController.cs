@@ -22,16 +22,17 @@ public class EnemyController : MonoBehaviour, IDamagable
     [SerializeField] private HPSystem hpSystem;
 
 
+    [SerializeField] private int attackDamage = 5;
+
+
     public void TakeDamage(int damage)
     {
-        // Debug.Log("HERE " + hp);
         if (hpSystem.IsDead)
             return;
 
 
         hpSystem.DecreaseHp(damage);
-
-        // playerAnim.transform.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.InQuad).OnComplete(() => { playerAnim.transform.localScale = Vector3.one; });
+        playerAnim.transform.DOScale(Vector3.one * 1.3f, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { playerAnim.transform.localScale = Vector3.one; });
         playerAnim.Play("React");
         Destroy(Instantiate(hitPref, transform.position + Vector3.up, Quaternion.identity), 3f);
 
@@ -43,8 +44,6 @@ public class EnemyController : MonoBehaviour, IDamagable
             playerAnim.SetLayerWeight(1, 0);
             playerAnim.Play("Death");
             _aiController.ChangeState(AIState.Dead);
-            // _aiController.enabled = false;
-            // this.enabled = false;
         }
 
     }
@@ -60,11 +59,10 @@ public class EnemyController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        // if (gameManagerRef.CheckState() == StateEnum.PlayState || Vector3.Distance(playerRef.transform.position, transform.position) >= 0.5f)
-        //     Move(Vector3.Scale((playerRef.transform.position - transform.position).normalized, new Vector3(1, 0, 1)));
-
         //Check for behaviour
         _aiController.CheckBehaviour(this);
+
+
     }
 
     public void Move(Vector3 destination)
@@ -83,38 +81,25 @@ public class EnemyController : MonoBehaviour, IDamagable
         }
     }
 
+
+    //Initial attack animation
     public void AttackAnim()
     {
-        playerAnim.SetTrigger("Attack");
+        playerAnim.SetBool("IsMoving", false);
+        playerAnim.SetTrigger("Attack0");
     }
+
+    //Damage calculations and end attack animation
     public void Attack(IDamagable target)
     {
-        // playerAnim.SetTrigger("Attack");
 
-        target.TakeDamage(1);
-        // target.TakeDamage(1);
+        // Debug.Log("HHHHH");
+        playerAnim.SetTrigger("Attack1");
+
+        if (target != null)
+            target.TakeDamage(attackDamage);
+
 
     }
 
-
-
-
-    // public void Move(Vector3 direction)
-    // {
-
-    //     var move = direction;
-    //     move.y = rb.velocity.y;
-    //     rb.velocity = new Vector3(move.x * Time.fixedDeltaTime * movementSpeed, move.y * Time.fixedDeltaTime * movementSpeed / 10f, move.z * Time.fixedDeltaTime * movementSpeed);
-
-
-
-    //     if (direction != Vector3.zero)
-    //     {
-    //         rb.rotation = Quaternion.LookRotation(Vector3.Scale(direction, new Vector3(1, 0, 1)));
-    //         playerAnim.SetBool("IsMoving", true);
-    //     }
-    //     else
-    //         playerAnim.SetBool("IsMoving", false);
-
-    // }
 }

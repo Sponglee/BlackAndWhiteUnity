@@ -80,11 +80,6 @@ public class AIControllerBase : MonoBehaviour
                     DOVirtual.DelayedCall(decisionTime, () => { });
                     CoolDownSequence();
                 }
-                else
-                {
-                    aiState = AIState.Move;
-                }
-
                 break;
             case AIState.GotHit:
                 timer = 0f;
@@ -99,15 +94,18 @@ public class AIControllerBase : MonoBehaviour
 
     private void AttackSequence(EnemyController refController)
     {
+
         refController.AttackAnim();
+
         // CheckTargetDistance();
         DOVirtual.DelayedCall(attackDelay, () =>
         {
             IDamagable tmpTargetToAttack = GetAttackTarget();
-            if (tmpTargetToAttack != null)
-            {
-                refController.Attack(tmpTargetToAttack);
-            }
+
+
+            refController.Attack(tmpTargetToAttack);
+
+
 
             aiState = AIState.Move;
         });
