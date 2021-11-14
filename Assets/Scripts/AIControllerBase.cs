@@ -1,4 +1,5 @@
 
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,16 +7,13 @@ public class AIControllerBase : MonoBehaviour
 {
 
     [SerializeField] private AIState aiState;
-
     [SerializeField] private float decisionTime = 0.2f;
     [SerializeField] private float attackDelay = 0.3f;
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private float aggroRadius = 5f;
     [SerializeField] private float attackRange = 1f;
-
     [SerializeField] private LayerMask targetLayer;
-
-
+    [SerializeField] private EnemyController refController;
     [SerializeField] private Transform currentTarget;
 
     private float timer = 0f;
@@ -23,24 +21,29 @@ public class AIControllerBase : MonoBehaviour
 
     private bool IsOnCoolDown = false;
 
+
+    private float currentDecisionTime;
+
     private void Start()
     {
-        decisionTime *= Random.Range(0.9f, 1.2f);
+        decisionTime *= UnityEngine.Random.Range(0.9f, 1.2f);
+        currentDecisionTime = decisionTime;
+        refController = GetComponent<EnemyController>();
     }
 
-    public void CheckBehaviour(EnemyController refController)
+    public void CheckBehaviour()
     {
         timer += Time.deltaTime;
 
-        if (timer >= decisionTime)
+        if (timer >= currentDecisionTime)
         {
-            ExecuteBehaviour(refController);
+            ExecuteBehaviour();
             timer = 0f;
         }
     }
 
 
-    public void ExecuteBehaviour(EnemyController refController)
+    public void ExecuteBehaviour()
     {
         switch (aiState)
         {
@@ -48,6 +51,7 @@ public class AIControllerBase : MonoBehaviour
                 Transform tmpTarget = GetMoveTarget();
                 if (tmpTarget != null)
                 {
+
                     currentTarget = tmpTarget;
                     refController.Move(tmpTarget.position);
                     aiState = AIState.Move;
@@ -61,8 +65,7 @@ public class AIControllerBase : MonoBehaviour
                 break;
             case AIState.Move:
 
-
-                IDamagable tmpAttackTarget = GetAttackTarget();
+                Transform tmpAttackTarget = GetAttackTarget();
                 if (tmpAttackTarget != null)
                 {
                     aiState = AIState.Attack;
@@ -76,14 +79,14 @@ public class AIControllerBase : MonoBehaviour
             case AIState.Attack:
                 if (!IsOnCoolDown)
                 {
-                    AttackSequence(refController);
+                    AttackSequence();
                     DOVirtual.DelayedCall(decisionTime, () => { });
-                    CoolDownSequence();
+                    // ResetCooldonw();
                 }
                 break;
             case AIState.GotHit:
                 timer = 0f;
-
+                currentDecisionTime = decisionTime;
                 aiState = AIState.Idle;
                 break;
             case AIState.Dead:
@@ -92,30 +95,40 @@ public class AIControllerBase : MonoBehaviour
         }
     }
 
-    private void AttackSequence(EnemyController refController)
+    private void AttackSequence()
     {
 
         refController.AttackAnim();
+        IsOnCoolDown = true;
 
         // CheckTargetDistance();
         DOVirtual.DelayedCall(attackDelay, () =>
         {
-            IDamagable tmpTargetToAttack = GetAttackTarget();
+            // if (aiState != AIState.Attack)
+            //     return;
 
-
+            Transform tmpTargetToAttack = GetAttackTarget();
             refController.Attack(tmpTargetToAttack);
+            ResetCooldown(() =>
+            {
+                aiState = AIState.Idle;
+            });
 
-
-
-            aiState = AIState.Move;
         });
 
     }
 
-    private void CoolDownSequence()
+    private void ResetCooldown(Action aCallback)
     {
         IsOnCoolDown = true;
-        DOVirtual.DelayedCall(attackCooldown, () => { IsOnCoolDown = false; });
+        currentDecisionTime = attackCooldown;
+        DOVirtual.DelayedCall(attackCooldown, () =>
+        {
+            IsOnCoolDown = false;
+            currentDecisionTime = decisionTime;
+            aCallback();
+        });
+
     }
 
     private Transform GetMoveTarget()
@@ -131,14 +144,14 @@ public class AIControllerBase : MonoBehaviour
         return null;
     }
 
-    private IDamagable GetAttackTarget()
+    private Transform GetAttackTarget()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, attackRange, targetLayer);
+        Collider[] targets = Physics.OverlapSphere(refController.attackPoint.position, attackRange, targetLayer);
 
         if (targets.Length > 0)
         {
             if (targets[0].GetComponent<IDamagable>() != null)
-                return targets[0].GetComponent<IDamagable>();
+                return targets[0].transform;
         }
 
         return null;
@@ -168,6 +181,6 @@ public class AIControllerBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, aggroRadius);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(refController.attackPoint.position, attackRange);
     }
 }

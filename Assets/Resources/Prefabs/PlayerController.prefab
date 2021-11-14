@@ -93,6 +93,36 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &485368443357952913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6805898359231109841}
+  m_Layer: 0
+  m_Name: Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6805898359231109841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485368443357952913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.802, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3943089457534939412}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1486266041446508073
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,10 +446,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPref: {fileID: 100000, guid: f49a5a9b3769b44e19b0ba146c3a4acf, type: 3}
   movementSpeed: 7
-  dashDistance: 300
+  dashDistance: 2
   rb: {fileID: 4651553116603424736}
   model: {fileID: 3727204890014126012}
-  attackSystem: {fileID: 0}
   playerAnim: {fileID: 5725351522642116063}
   cameraRef: {fileID: 0}
   targetLayer:
@@ -431,6 +460,21 @@ MonoBehaviour:
   agent: {fileID: 210486762}
   hpSystem: {fileID: 8545137190193697673}
   comboSystem: {fileID: 8017858581850596957}
+  OnDash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4189263810735889376}
+        m_TargetAssemblyTypeName: MeleeWeaponTrail, Assembly-CSharp
+        m_MethodName: EmitWithDelay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsAttacking: 0
   IsDashing: 0
 --- !u!114 &8545137190193697673
@@ -464,12 +508,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f412349b9203469c89c04e456202e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingEffectPref: {fileID: 100000, guid: 352304b7fbe11f445970df6ae36e6227, type: 3}
+  swingEffectPref: {fileID: 7671430875454797090, guid: 7dcb0566f884644e2baed80b3fdb41b5, type: 3}
   refAnim: {fileID: 5725351522642116063}
   OnAttack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8619931094408816250}
+      - m_Target: {fileID: 8819239310034924508}
         m_TargetAssemblyTypeName: MeleeWeaponTrail, Assembly-CSharp
         m_MethodName: EmitWithDelay
         m_Mode: 1
@@ -754,6 +798,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6808683942476924911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1992353285897187399}
+  m_Layer: 0
+  m_Name: Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1992353285897187399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6808683942476924911}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3943089457534939412}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6880391768237992751
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +892,64 @@ Transform:
   m_Father: {fileID: 4651553116603424738}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8308095192951826997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3943089457534939412}
+  - component: {fileID: 4189263810735889376}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3943089457534939412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308095192951826997}
+  m_LocalRotation: {x: -0.009049788, y: -0.009049787, z: 0.70704883, w: 0.7070489}
+  m_LocalPosition: {x: 0.8864634, y: 0, z: 0.056447014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1992353285897187399}
+  - {fileID: 6805898359231109841}
+  m_Father: {fileID: 6090170628417562909}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4189263810735889376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308095192951826997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ceb339997c8304e9354d4ce5ddc9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emit: 0
+  _emitTime: 0
+  _material: {fileID: 2100000, guid: 5f402d1520e5fa74fa21e08f85b71370, type: 2}
+  _lifeTime: 0.25
+  _colors: []
+  _sizes: []
+  _minVertexDistance: 0.1
+  _maxVertexDistance: 10
+  _maxAngle: 3
+  _autoDestruct: 0
+  subdivisions: 4
+  _base: {fileID: 6805898359231109841}
+  _tip: {fileID: 1992353285897187399}
 --- !u!1 &8357376794459967498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,14 +1157,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
---- !u!4 &2992183871880065621 stripped
+--- !u!4 &6090170628417562909 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 367304667414334856, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8654250720420943552, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
   m_PrefabInstance: {fileID: 3215203751547863005}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6090170628417562919 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
+  m_PrefabInstance: {fileID: 3215203751547863005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2992183871880065621 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 367304667414334856, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
   m_PrefabInstance: {fileID: 3215203751547863005}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5631227487659062129

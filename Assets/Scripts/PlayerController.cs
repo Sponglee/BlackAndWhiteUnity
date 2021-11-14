@@ -1,16 +1,18 @@
 using System;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
+
     [SerializeField] private GameObject hitPref;
     [SerializeField] private float movementSpeed = 5f;
-    [SerializeField] private float dashDistance = 300f;
+    [SerializeField] private float dashDistance = 3f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform model;
-    [SerializeField] private Transform attackSystem;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private Transform cameraRef;
     [SerializeField] private LayerMask targetLayer;
@@ -20,6 +22,9 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private HPSystem hpSystem;
     [SerializeField] private ComboAttackSystem comboSystem;
+
+    public UnityEvent OnDash;
+
     public bool IsAttacking = false;
     public bool IsDashing = false;
     private void Start()
@@ -56,36 +61,42 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (IsDashing)
             return;
 
+        OnDash.Invoke();
+
         IsDashing = true;
         playerAnim.SetBool("IsDashing", true);
         agent.speed = 0f;
 
         Vector3 startPos = transform.position;
         var move = Vector3.Scale(cameraRef.rotation * dir, new Vector3(1, 0, 1)).normalized;
-        Debug.Log(dir + " : " + move);
 
+        Vector3 offset = move;
 
-
-        agent.Move(move * Time.fixedDeltaTime * dashDistance);
-
+        SmoothAgentMove(offset * dashDistance);
 
         DOVirtual.DelayedCall(0.3f, () =>
         {
-            // agent.speed = tmpSpeed;
-            // agent.enabled = true;
-            // agent.acceleration = 0f;
-            // rb.velocity = Vector3.zero;
+
             agent.speed = movementSpeed;
             agent.ResetPath();
             playerAnim.SetBool("IsDashing", false);
             IsDashing = false;
         });
-        // agent.SetDestination(transform.position + transform.forward * movementSpeed);
+    }
 
-        // DOVirtual.DelayedCall(10f, () =>
-        // {
 
-        // });
+    public async void SmoothAgentMove(Vector3 destination)
+    {
+        float elapsed = 0f;
+        float duration = 0.15f;
+
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            agent.Move(Vector3.Slerp(Vector3.zero, destination, elapsed / duration));
+            await Task.Yield();
+        }
     }
 
     public void Jump()
