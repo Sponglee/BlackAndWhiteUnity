@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f412349b9203469c89c04e456202e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingEffectPref: {fileID: 7671430875454797090, guid: 7dcb0566f884644e2baed80b3fdb41b5, type: 3}
+  swingEffectPref: {fileID: 163229726658853650, guid: d8787974532569348ad0a8d848192485, type: 3}
   refAnim: {fileID: 5725351522642116063}
   OnAttack:
     m_PersistentCalls:
