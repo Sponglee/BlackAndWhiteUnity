@@ -14,7 +14,7 @@ public class ComboAttackSystem : MonoBehaviour
     {
         OnAttack.Invoke();
         refAnim.SetTrigger("Attack");
-        Destroy(Instantiate(swingEffectPref, transform.position + Vector3.up, transform.rotation, transform), 3f);
+        Destroy(Instantiate(swingEffectPref, transform.position + Vector3.up, refAnim.transform.rotation), 3f);
     }
 
 

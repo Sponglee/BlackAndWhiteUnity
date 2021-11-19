@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             playerAnim.SetBool("IsMoving", true);
 
             if (!IsAttacking)
-                model.DOLocalRotate(Vector3.zero, 0.2f);
+                model.DOLocalRotate(Vector3.zero, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(cameraRef.rotation * direction, new Vector3(1, 0, 1))), 0.5f);
         }
         else
